@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container"></div>
+    <button id="btn">点击获取名言</button>
+    <!-- https://api.apiopen.top/api/sentences -->
+    <script>
+          let btn = document.querySelector('#btn')
+          let show = document.querySelector('.container')
+          btn.addEventListener('click',async ()=>{
+             let p  = await new Promise((resolve,reject)=>{
+                 const xhr =  new XMLHttpRequest();
+                 xhr.open('GET','https://api.apiopen.top/api/sentences')
+                 xhr.send();
+                 xhr.onreadystatechange = function(){
+                     if(xhr.readyState === 4){
+                         if(xhr.status >= 200 && xhr.status < 300){
+                             resolve(xhr.response)
+                         }else{
+                             reject(xhr.response)
+                         }
+                     }
+                 }
+             })
+             console.log(p);
+            console.log(JSON.parse(p));
+
+            //将promise返回的字符串转换为对象
+            let duanzi =JSON.parse(p).result.name
+            let duanzis = []
+            //将段子添加到数据
+            duanzis.push(duanzi);
+            console.log(duanzis);
+            //设置一个变量接受数组的最后一个元素
+             let a = duanzis[duanzis.length-1];
+             //创建一个新的节点
+             let newdom = document.createElement('div')
+             //新节点内部写入a
+             newdom.innerText = a
+             //添加节点
+             show.append(newdom)
+          })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let p = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('ok')
+            }, 1000)
+        })
+
+        p.then(value => {
+            console.log(111);
+            return new Promise(() => {}) //想要中断promise函数需要返回一个pending状态的promise
+        }).then(value => {
+            console.log(222);
+        }).then(value => {
+            console.log(333);
+        }).catch(reason => {
+            console.warn(reason);
+        })
+
+
+        //中断 promise 链?
+        //(1) 当使用 promise 的 then 链式调用时, 在中间中断, 不再调用后面的回调函数
+        //(2) 办法: 在回调函数中返回一个 pendding 状态的 promise 对象
+    </script>
+</body>
+
+</html>

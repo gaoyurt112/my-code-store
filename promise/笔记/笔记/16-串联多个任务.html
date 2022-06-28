@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>串联多个任务</title>
+</head>
+
+<body>
+    <script>
+        let p = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('ok')
+            }, 1000)
+        })
+
+        p.then(value => {
+            return new Promise((resolve, reject) => {
+                resolve('success') //需要等待上面的异步任务执行完毕拿到返回值才能继续
+            })
+        }).then(value => {
+            console.log(value);
+        }).then(value => {
+            console.log(value); //这里输出undefined   没有返回值
+        })
+
+        //promise 如何串连多个操作任务?
+        //(1) promise 的 then()返回一个新的 promise, 可以开成 then()的链式调用
+        //(2) 通过 then 的链式调用串连多个同步/异步任务
+    </script>
+</body>
+
+</html>

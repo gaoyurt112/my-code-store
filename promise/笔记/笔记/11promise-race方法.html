@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let p1 = new Promise((resolve, reject) => {
+            // resolve('ok');
+            // reject('error')由第一个promise对象决定结果
+
+            //如果为一个异步操作
+            setTimeout(() => {
+                resolve('ok')
+            }, 1000)
+        })
+
+        let p2 = Promise.resolve('success'); ////如果为一个异步操作则按顺序排列
+        let p3 = Promise.resolve('oh,yes');
+
+        const result = Promise.race([p1, p2, p3])
+        //谁先返回结果谁就据欸的那个结果
+        console.log(result);
+    </script>
+</body>
+
+</html>
