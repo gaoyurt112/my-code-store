@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入vue -->
+    <script type="text/javascript" src="H:\VUE\练习\vue\vue.js"></script>
+    <title>1</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 总结：
+    v-cloak指令（没有值）：
+    1.本质是一个特殊属性，vue实例创建完毕并接管容器后，会删除掉v-clock属性
+    2.使用css配合v-cloak可以解决网速慢时页面展示出{{name}}的问题    
+    -->
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <div v-cloak>{{name}}</div>
+    </div>
+
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示
+
+    new Vue({
+        el: '#root',
+        data: {
+            name: '尚硅谷'
+        }
+    })
+</script>
+
+</html>

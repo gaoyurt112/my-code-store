@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="H:\VUE\练习\vue\vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+        <h2>原始数据:{{name}}</h2>
+        <h2>反转后的数据:{{reversedMessage}}</h2>
+    </div>
+
+
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    name: 'shangguigu'
+                }
+            },
+            computed: {
+                // 计算属性的 getter
+                reversedMessage: function() {
+                    // `this` 指向 vm 实例
+                    //将字符串拆分为数组，在反转数组
+                    return this.name.split('').reverse().join('')
+                }
+            }
+        })
+    </script>
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

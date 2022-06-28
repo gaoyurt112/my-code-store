@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入echarts -->
+    <script src="lib/echarts.min.js"></script>
+</head>
+
+<body>
+    <!-- 
+        1.基本代码结构
+        2.定义各个维度的最大值
+        indicator:[{name:'易用性'，max:100},...]
+        3.准备具体产品的数据
+        data:[{name:'华为手机1',value:[80,90,80,82,90]}]
+        4.图标类型：
+        在series下设置type:'radar'
+     -->
+    <div style="width: 600px;height: 500px;">
+
+    </div>
+    <script>
+        var mCharts = echarts.init(document.querySelector('div'))
+        var dataMax = [{
+            name: '易用性',
+            max: 100
+        }, {
+            name: '功能',
+            max: 100
+        }, {
+            name: '拍照',
+            max: 100
+        }, {
+            name: '跑分',
+            max: 100
+        }, {
+            name: '续航',
+            max: 100
+        }]
+        var option = {
+            radar: { //配置各个维度的最大值
+                indicator: dataMax,
+                shape: 'circle' //配置雷达图最外层的图形 polygon
+            },
+            series: [{
+                type: 'radar', //指明此图标是一个雷达图
+                label: { //设置标签样式
+                    show: true
+                },
+                areaStyle: {}, //区域显示效果
+                data: [{
+                    name: '华为手机1',
+                    value: [80, 90, 80, 82, 90]
+                }, {
+                    name: '中兴手机1',
+                    value: [70, 82, 75, 70, 78]
+                }]
+            }]
+        }
+        mCharts.setOption(option)
+    </script>
+</body>
+
+</html>

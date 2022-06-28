@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入echarts -->
+    <script src="lib/echarts.min.js"></script>
+</head>
+
+<body>
+    <div style="width: 600px;height: 500px;">
+
+    </div>
+    <script>
+        // 准备展示容器
+        var mCharts = echarts.init(document.querySelector('div'))
+        var xDataArr = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+        var yDateArr1 = [3000, 2800, 900, 1000, 800, 700, 1400, 1300, 900, 1000, 800, 600]
+        var yDateArr2 = [3050, 2648, 460, 1853, 942, 716, 1900, 1675, 526, 829, 720, 942]
+            //配置项
+        let option = {
+            title: {
+
+            },
+            xAxis: {
+                type: 'category',
+                data: xDataArr,
+                boundaryGap: false //紧挨边缘
+            },
+            yAxis: {
+                type: 'value',
+                scale: true //脱离0值比例
+            },
+            series: [{
+                    name: '数据',
+                    data: yDateArr1,
+                    stack: 'all', //堆叠图
+                    areaStyle: {}, //填充风格
+                    type: 'line', // 最大值最小值
+                    markPoint: {
+                        data: [{
+                            type: 'max'
+                        }, {
+                            type: 'min'
+                        }]
+                    },
+                    //平均值
+                    markLine: {
+                        data: [{
+                            type: 'average'
+                        }]
+                    },
+                    //标记区域
+                    markArea: {
+                        data: [
+                            [{
+                                xAxis: '1月'
+                            }, {
+                                xAxis: '2月'
+                            }],
+                            [{
+                                xAxis: '7月'
+                            }, {
+                                xAxis: '8月'
+                            }]
+                        ]
+                    },
+                    // 平滑风格
+                    smooth: true,
+                    //线条风格
+                    lineStyle: {
+                        color: 'green',
+                        type: 'dashed' //dashed dotted solid
+                    },
+                    areaStyle: {
+                        color: 'pink'
+                    }
+                }, {
+                    type: 'line',
+                    data: yDateArr2,
+                    stack: 'all', //堆叠图
+                    areaStyle: {} //填充风格
+                },
+
+
+            ]
+
+
+        }
+        mCharts.setOption(option)
+    </script>
+</body>
+
+</html>

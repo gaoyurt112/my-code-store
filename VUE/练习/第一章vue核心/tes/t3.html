@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="H:\VUE\练习\vue\vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+        <h1>人员信息</h1>
+        <ul>
+            <li v-for="(p,index) in person" :key="index">
+                {{p.name}}-{{p.age}}
+            </li>
+        </ul>
+        <hr>
+        <h1>汽车信息</h1>
+        <ul>
+            <li v-for="(k,value) in car" :key="k">
+                {{value}}-{{k}}
+            </li>
+        </ul>
+    </div>
+
+
+
+
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    person: [{
+                        name: '张三',
+                        age: '18',
+                    }, {
+                        name: '李四',
+                        age: 20
+                    }, {
+                        name: '王五',
+                        age: 21
+                    }],
+                    car: {
+                        name: '宝马',
+                        color: '黑色',
+                        model: '540i'
+                    }
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

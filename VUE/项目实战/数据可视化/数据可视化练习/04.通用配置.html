@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入echarts -->
+    <script src="lib/echarts.min.js"></script>
+</head>
+
+<body>
+    <!-- 通用配置指的就是任何图标都能使用的配置
+        标题:title
+        1.文字样式
+        2.标题边框
+        3.标题位置
+
+        提示:tooltip  提示框组件，用于配置鼠标滑过或点击图标时的显示框
+        触发类型:trigger
+        item,axis
+
+        触发时机:triggerOn
+        mousemove,click
+
+        格式化:formatter    柱状图中{b}表示类目值 {c}表示数值
+        字符串模板,回调函数
+
+        工具按钮:toolbox  echarts提供的工具栏
+        内置有导出图片，数据视图，动态类型切换，数据区域缩放，重置五个工具
+ 
+
+        图例:legend   用于筛选系列，需要配合series配合使用
+        legend中的data是一个数组
+        legend中的data的值需要和series数组中的某组数据的name值一致
+     -->
+
+    <!-- 准备展示容器 -->
+    <div style="width: 600px; height: 400px;">
+
+    </div>
+    <script>
+        // 初始化echarts
+        var mCharts = echarts.init(document.querySelector('div'))
+        var xDataArr = ['张三', '李四', '王五', '闰土', '小明', '茅台', '二妞', '大强']
+        var yDataArr1 = [88, 92, 63, 77, 94, 80, 72, 86]
+        var yDataArr2 = [97, 93, 67, 68, 77, 57, 66, 94]
+        var option = {
+                title: {
+                    text: '成绩展示',
+                    textStyle: {
+                        color: 'red'
+                    },
+                    borderWidth: 5,
+                    borderColor: 'black',
+                    bordeRadius: 5,
+                    left: 50,
+                    top: 10
+                },
+                tooltip: {
+                    trigger: 'item',
+                    // trigger: 'axis',
+                    triggerOn: 'mousemove',
+
+                    // formatter: '{b}的成绩是{c}'
+                    formatter: function(arg) {
+                        // console.log(arg);
+                        return arg.name + '的分数是:' + arg.data
+                    }
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}, //导出为图片
+                        dataView: {}, //数据视图
+                        restore: {},
+                        dataZoom: {},
+                        magicType: {
+                            type: ['bar', 'line'] //动态图表类型切换
+                        }
+                    }
+                },
+                legend: {
+                    data: ['语文', '数学']
+                },
+                //x轴
+                xAxis: {
+                    type: 'category',
+                    data: xDataArr
+                },
+                //y轴
+                yAxis: {
+                    type: 'value'
+                },
+                //类型
+                series: [{
+                    name: '语文',
+                    type: 'bar',
+                    data: yDataArr1
+                }, {
+                    name: '数学',
+                    type: 'bar',
+                    data: yDataArr2
+                }]
+            }
+            //将配置项传递给echarts
+        mCharts.setOption(option)
+    </script>
+</body>
+
+</html>

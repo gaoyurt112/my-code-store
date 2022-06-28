@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入echarts -->
+    <script src="lib/echarts.min.js"></script>
+    <script src="lib/jquery.min.js"></script>
+</head>
+
+<body>
+    <!-- 
+        显示加载动画
+        mCharts.showLoading()
+
+        隐藏加载动画
+        mCharts.hideLoading()
+     -->
+    <div style="width: 600px; height: 500px;">
+
+    </div>
+    <script>
+        var mCharts = echarts.init(document.querySelector('div'))
+        mCharts.showLoading() //服务器获取数据之前显示加载动画
+        $.get('data/test_data.json', function(ret) {
+            mCharts.hideLoading() //服务器获取数据成功后隐藏加载动画
+            var axisData = []
+            for (var i = 0; i < ret.length; i++) {
+                var height = ret[i].height
+                var weight = ret[i].weight
+                var newArr = [height, weight]
+                axisData.push(newArr)
+                let option = {
+                    xAxis: {
+                        type: 'value',
+                        scale: true //脱离0值比例
+                    },
+                    yAxis: {
+                        type: 'value',
+                        scale: true //脱离0值比例
+                    },
+                    series: [{
+                            // type: 'scatter',
+                            //涟漪动画效果
+                            type: 'effectScatter',
+                            showEffectOn: 'emphasis', //render emphasis
+                            rippleEffect: {
+                                scale: 3
+                            },
+                            data: axisData,
+                            // symbolSize: 10
+                            // 散点大小
+                            symbolSize: function(arg) {
+                                var height = arg[0] / 100
+                                var weight = arg[1]
+                                    //bmi = 体重kg/（身高cm*身高）  大于28，就代表肥胖
+                                var bmi = weight / (height * height)
+                                if (bmi > 28) {
+                                    return 20
+                                }
+                                return 5
+                            },
+                            //散点颜色不同
+                            itemStyle: {
+                                // color: 'green'
+                                color: function(arg) {
+                                    console.log(arg);
+                                    var height = arg.data[0] / 100
+                                    var weight = arg.data[1]
+                                        //bmi = 体重kg/（身高cm*身高）  大于28，就代表肥胖
+                                    var bmi = weight / (height * height)
+                                    if (bmi > 28) {
+                                        return 'red'
+                                    }
+                                    return 'green'
+                                }
+                            }
+
+
+                        }
+
+                    ]
+
+                }
+                mCharts.setOption(option)
+            }
+        })
+
+        // console.log(axisData);
+    </script>
+
+
+
+
+</body>
+
+</html>

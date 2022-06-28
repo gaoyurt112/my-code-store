@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入vue -->
+    <script type="text/javascript" src="H:\VUE\练习\vue\vue.js"></script>
+    <title>1</title>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <!-- 使用学校组件 -->
+        <nh></nh>
+        <my-school></my-school>
+
+    </div>
+</body>
+<!-- 1.一个重要的内置关系：VueComponent.prototype._proto_===Vue.prototype 
+      也就是说，Vc可以访问到vue原型对象上的属性与值   他们指向的是一个同样的原型
+
+
+
+-->
+
+<script type="text/javascript">
+    Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示
+
+    //创建student组件
+    const student = Vue.extend({ //注意：组件中的this指向的时vc也就是vueComponent实例对象不等于vm
+        //组件中不要写el配置项
+        template: `
+        <div>
+            <h2>学生姓名:{{name}}</h2>
+            <h2>学生年龄:{{age}}</h2>
+         </div>
+        `,
+        data() {
+            return {
+                name: '张三',
+                age: 18
+            }
+        }
+    })
+
+    //创建school组件
+    const school = Vue.extend({ //写在括号中
+        //组件结构
+        template: `
+         <div>
+            <h2>学校名称:{{name}}</h2>
+            <h2>学校地址:{{address}}</h2>
+            <student></student>    
+            <nh></nh>
+         </div>
+        `,
+        //嵌套在谁里面就把结构写在谁里面
+        data() {
+            return {
+                name: '尚硅谷',
+                address: '北京'
+            }
+        },
+        components: { //组件嵌套时，被嵌套的组件需要在嵌套目标中注册
+            student: student
+        }
+    })
+
+
+    //创建一个全局组件hello
+    const hello = Vue.extend({
+        template: `
+        <div>
+            <h1>{{msg}}</h1>
+        </div>
+        `,
+        data() {
+            return {
+                msg: '你好呀'
+            }
+        }
+    })
+
+    //将hello组件注册为一个全局组件  注意：component不要写成了components
+    Vue.component('nh', hello) //括号内为 定义组件名  和创建时的组件名字
+
+
+
+    new Vue({
+        el: '#root',
+        components: {
+            'my-school': school //注册学校组件    //使用多单词的时候记得包在引号中
+        }
+    })
+</script>
+
+</html>

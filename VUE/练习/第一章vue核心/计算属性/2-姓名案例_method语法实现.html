@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入vue -->
+    <script type="text/javascript" src="H:\VUE\练习\vue\vue.js"></script>
+    <title>1.13-姓名案例_method语法实现</title>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        姓:<input type="text" v-model="firstname"> <br/><br/> 名:
+        <input type="text" v-model="lastname"> <br/><br/> 全名: <span>{{fullName()}}</span>
+
+
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示
+
+        new Vue({
+            el: '#root',
+            data: {
+                firstname: '张',
+                lastname: '三'
+            },
+            methods: {
+                fullName() {
+                    return this.firstname + '-' + this.lastname //this指向vm也就是vue实例
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

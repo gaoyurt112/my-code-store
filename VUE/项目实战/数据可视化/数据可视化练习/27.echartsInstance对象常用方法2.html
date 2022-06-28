@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/echarts.min.js"></script>
+    <script src="lib/jquery.min.js"></script>
+</head>
+
+<body>
+    <!-- 
+      setOption
+      resize
+      on/off
+      dispatchAction
+      clear
+      dispose
+    -->
+    <div style="width: 600px;height: 500px;"></div>
+    <button id="btn1">触发行为</button>
+    <button id="btn2">clear</button>
+    <button id="btn3">setOption</button>
+    <button id="btn4">dispose</button>
+    <script>
+        var mCharts = echarts.init(document.querySelector('div'))
+        var pieData = [{
+                name: '淘宝',
+                value: 11231
+            }, {
+                name: '京东',
+                value: 22673
+            }, {
+                name: '唯品会',
+                value: 6123
+            }, {
+                name: '1号店',
+                value: 8989
+            }, {
+                name: '聚美优品',
+                value: 6700
+            },
+
+        ]
+
+
+        var option = {
+            tooltip: {
+                show: true
+            },
+            legend: {
+                data: ['淘宝', '京东', '唯品会', '1号店', '聚美优品', ]
+            },
+            series: [{
+                    type: 'pie',
+                    data: pieData,
+                    label: { //饼图文字显示
+                        show: true, //显示文字 默认配置
+                        // formatter: 'hehe' //决定文字显示内容
+                        formatter: function(arg) {
+                            return arg.name + '平台：' + arg.value + '元\n' + '     占比' + arg.percent + '%'
+                        }
+                    },
+                    // radius: 200 //饼图半径设置
+                    // radius: '20%' //百分比参照的是宽度和高度中较小的那一部分的一半来进行百分比设置
+                    // radius: ['50%', '75%'] //第0个元素代表的是内圆的半径  第1个元素表示的是外圆的半径
+                    selectedMode: 'multiple', // 'single'  'multiple'
+                    selectedOffset: 30
+
+                }
+
+            ]
+
+        }
+        mCharts.setOption(option)
+
+        //  dispathAction方法
+        // 触发某些行为
+        // 使用代码模拟用户的行为
+
+        $('#btn1').click(function() {
+            // 模拟用户的行为
+            mCharts.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0, // 系列的索引
+                dataIndex: 1 // 数据的索引
+            })
+            mCharts.dispatchAction({
+                type: 'showTip',
+                seriesIndex: 0,
+                dataIndex: 1
+            })
+        })
+
+        $('#btn2').click(function() {
+            //清空图表的实例
+            mCharts.clear() //清空当前实例，会移出实例中所有的组件和图标 清空之后可以再次setOption
+
+        })
+
+        $('#btn3').click(function() {
+            mCharts.setOption(option) //重新设置option
+        })
+
+        //销毁实例对象
+        $('#btn4').click(function() {
+            mCharts.dispose()
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入echarts -->
+    <script src="lib/echarts.min.js"></script>
+</head>
+
+<body>
+    <div style="width: 600px;height: 500px;">
+
+    </div>
+    <script>
+        var mCharts = echarts.init(document.querySelector('div'))
+        var option = {
+            series: [{
+                type: 'gauge',
+                detail: {
+                    formatter: '温度'
+                },
+                data: [{
+                    value: 97,
+                    itemStyle: {
+                        color: 'pink' //指针颜色
+                    }
+                }, {
+                    value: 85,
+                    itemStyle: {
+                        color: 'green'
+                    }
+                }],
+                min: 50 //min max 控制仪表盘数值范围
+            }]
+        }
+        mCharts.setOption(option)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入echarts -->
+    <script src="lib/echarts.min.js"></script>
+    <!-- 引入jquery -->
+    <script src="lib/jquery.min.js"></script>
+</head>
+<!-- 
+    1.eCharts最基本的代码结构:
+    引入Js文件，dom容器，初始化对象，设置option
+
+    2.准备中国的矢量地图json文件，放到json/map/的目录下china,json
+    
+    3.使用ajax获取china.json
+    $get('json/map/china.json',function(chinaJson){})
+
+    4.在回调函数中往echarts全局对象注册地图的json数据
+    echarts.registerMap('chinaMap',chinaJson)
+
+    5.在geo下设置
+    type:'map'
+    map:'chinaMap'
+ -->
+<div style="width: 600px;height: 500px; border:1px solid red">
+
+</div>
+
+<script>
+    var mCharts = echarts.init(document.querySelector('div'))
+    $.get('json/map/china.json', function(ret) {
+        // console.log(ret);
+        echarts.registerMap('chinaMap', ret)
+        var option = {
+            geo: {
+                type: 'map',
+                map: 'chinaMap', //chinaMap需要和registerMap中的第一个参数保持一致
+                roam: true, //允许缩放拖动
+                label: {
+                    show: true //显示名称
+                },
+                zoom: 1, //设置初始化的缩放比例
+                center: [87.617733, 43.792818] //设置中心点坐标
+            }
+        }
+        mCharts.setOption(option)
+    })
+</script>
+
+<body>
+
+</body>
+
+</html>

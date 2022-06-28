@@ -1,0 +1,76 @@
+{
+/*
+//配置tsconfig配置文件运行tsc | tsc -w可以直接编译所有ts文件
+tsconfig.json是ts编译器的配置文件，ts编译器可以根据它的信息来对代码进行编译
+"include"用来指定哪些ts文件需要被编译
+      路径:**表示任意目录
+            *表示任意文件
+
+"exclude"表示排除不需要被编译的文件 (可选)
+默认值：["node_modules","bower_components","jspm_packages"]
+
+"files列举需要被编译的文件"
+"files":[
+    "文件名",
+    "文件名",
+    ...
+]
+*/
+
+"include": [
+    "./src/**/*"
+    ],
+    // "exclude": [
+    // "./src/hello/**/*"
+    // ]
+
+    /*
+    compilerOptions 编译器的选项
+    */
+    "compilerOptions": {
+        //target 用来指定ts被编译的ES版本
+        "target": "ES6",
+        //module 指定要使用的模块话的规范
+        "module": "ES6",
+        //lib用来指定项目中要使用的库
+        // "lib":["ES6", "DOM"]
+
+        //outDir用来指定编译后文件所在的目录
+        "outDir": "./dist",
+
+        //outFile将代码合成一个文件
+        // "outFile": "./dist/app.js"
+
+        //allowJs是否对js文件进行编译,默认为false
+        "allowJs": false,
+
+        //checkJs是否检查js代码是否符合语法规范
+        "checkJs": false,
+
+        //removeComments是否移除注释
+        "removeComments": true,
+
+        //noEmit不生成编译后的文件
+        // "noEmit": false,
+
+        //noEmitOnError当有错误时不生成编译后的文件
+        "noEmitOnError": true,
+
+        //strict 所有严格检查的总开关
+        "strict": true,
+
+        //alwaysStrict设置编译后的文件是否使用严格模式
+        "alwaysStrict": false,
+
+        //noImplicitAny 不允许出现隐式的any
+        "noImplicitAny": true,
+
+        //noInplicitThis 不允许不明类型的this
+        "noImplicitThis": true,
+
+        //strictNullChecks严格的检查空值
+        "strictNullChecks": false
+
+
+    }
+}

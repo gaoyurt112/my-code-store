@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入vue -->
+    <script type="text/javascript" src="H:\VUE\练习\vue\vue.js"></script>
+    <title>1</title>
+    <style>
+        .basic {
+            width: 300px;
+            height: 200px;
+            background-color: aquamarine;
+            border: 1px solid #ccc;
+        }
+        
+        .happy {
+            width: 300px;
+            height: 200px;
+            background-color: red;
+            border: 1px solid #ccc;
+        }
+        
+        .sad {
+            width: 300px;
+            height: 200px;
+            background-color: black;
+            border: 1px solid #ccc;
+        }
+        
+        .normal {
+            width: 300px;
+            height: 200px;
+            background-color: orange;
+            border: 1px solid #ccc;
+        }
+        
+        .atguigu1 {
+            border-radius: 15px;
+        }
+        
+        .atguigu2 {
+            background-color: pink;
+        }
+        
+        .atguigu3 {
+            box-shadow: 4px 4px 4px 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <!-- 绑定class样式--字符串写法，适用于：样式的类名不确定，需要动态指定 -->
+        <div class="basic" :class="mood" @click="changeMood">{{name}}</div><br><br>
+        <!-- 绑定class样式--数组写法，适用于：要绑定的样式个数不确定，名字也不确定 -->
+        <div class="basic" :class="classarr">{{name}}</div><br><br>
+        <!-- 绑定class样式--数组写法，适用于：要绑定的样式个数确定，名字也确定,但要动态决定用不用 -->
+        <div class="basic" :class="classobj">{{name}}</div><br><br>
+        <!-- 绑定style样式 数组写法 -->
+        <div class="basic" :style="styleobj">{{name}}</div>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示
+
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            name: '尚硅谷',
+            mood: 'normal',
+            classarr: ['atguigu1', 'atguigu2', 'atguigu3'],
+            classobj: {
+                atguigu1: true,
+                atguigu2: true,
+            },
+            styleobj: {
+                fontSize: '40px'
+            }
+        },
+        methods: {
+            changeMood() {
+                const arr = ['happy', 'sad', 'normal']
+                const index = Math.floor(Math.random() * 3) //向下取整随机数
+                this.mood = arr[index]
+            }
+        },
+    })
+</script>
+
+</html>

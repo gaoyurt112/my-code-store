@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入vue -->
+    <script type="text/javascript" src="H:\VUE\练习\vue\vue.js"></script>
+    <title>1</title>
+</head>
+
+<body>
+    <!-- 总结：
+           1.一个重要的内置关系：VueComponent.prototype._proto_===Vue.prototype
+           2.为什么要有这个关系：让组件实例对象（vc）可以访问到vue原型上的属性、方法
+    -->
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <school/>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示
+
+    Vue.prototype.x = 99 //设置Vue的原型对象上的x的值为99
+
+
+    //第一步：创建school组件
+    const school = Vue.extend({
+        template: `
+        <div>
+        <h2>学校名称:{{schoolName}}</h2>
+        <h2>学校地址:{{address}}</h2>
+        <button @click="showX">点我输出x</button>
+        </div>
+        `,
+        // el: '#root', //一定不要在组件里写el配置项，因为最终所有的组件都要被一个vm管理，由vm决定服务于哪个容器
+        data() {
+            return {
+                schoolName: '尚硅谷',
+                address: '北京',
+            }
+        },
+        methods: {
+            showX() {
+                alert(this.x) //这里的this指向的是vc也就是组件的实例对象
+            }
+        },
+    })
+
+    //创建vm
+    new Vue({
+        el: '#root',
+        data: {
+            msg: '你好'
+        },
+        // 第二步：注册组件（局部注册）
+        components: {
+            school: school,
+        }
+    })
+</script>
+
+</html>

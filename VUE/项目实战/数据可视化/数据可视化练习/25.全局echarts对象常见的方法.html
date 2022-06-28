@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入echarts -->
+    <script src="lib/echarts.min.js"></script>
+</head>
+
+<body>
+
+    <!-- 
+connrct可以实现多图关联，传入联动目标为eCharts实例对象，支持数组。
+保存的图片自动拼接
+刷新按钮
+重置按钮
+提示框联动，图例选择，数据范围修改等
+     -->
+    <!-- 准备展示容器 -->
+    <div style="width: 600px; height: 400px;">
+
+    </div>
+    <script>
+        // 初始化echarts
+        var mCharts = echarts.init(document.querySelector('div'))
+        var xDataArr = ['张三', '李四', '王五', '闰土', '小明', '茅台', '二妞', '大强']
+        var yDataArr = [88, 92, 63, 77, 94, 80, 72, 86]
+        var option = {
+                //x轴
+                xAxis: {
+                    type: 'category',
+                    data: xDataArr
+                },
+                //y轴
+                yAxis: {
+                    type: 'value'
+                },
+                //类型
+                series: [{
+                    name: '语文',
+                    type: 'bar',
+                    // 标记最大值最小值
+                    markPoint: {
+                        data: [{
+                            type: 'max',
+                            name: '最大值'
+                        }, {
+                            type: 'min',
+                            name: '最小值'
+                        }]
+                    },
+                    // 标记平均值
+                    markLine: {
+                        data: [{
+                            type: 'average',
+                            name: '平均值'
+                        }]
+                    },
+                    //数值显示
+                    label: {
+                        show: true, //数值显示
+                        rotate: 60, //数值旋转
+                        position: 'top' //数值显示位置
+                    },
+                    barWidth: '30%', //柱宽度
+                    data: yDataArr
+                }]
+            }
+            //将配置项传递给echarts
+        mCharts.setOption(option)
+
+
+        //关联两个列表
+        echarts.connect([mCharts, mCharts2])
+    </script>
+</body>
+
+</html>

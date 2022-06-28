@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入echarts -->
+    <script src="lib/echarts.min.js"></script>
+</head>
+
+<body>
+    <!-- 
+       显示数值:label.formatter
+
+       圆环:设置两个半径radius:['50%','75%'']
+
+       南丁格尔图:roseType:'radius'
+
+       选中效果:selectedMode: 'multiple', // 'single'  'multiple'
+                    selectedOffset: 30
+
+     -->
+    <div style="width: 600px;height: 500px;">
+
+    </div>
+    <script>
+        var mCharts = echarts.init(document.querySelector('div'))
+        var pieData = [{
+                name: '淘宝',
+                value: '11231'
+            }, {
+                name: '京东',
+                value: '22673'
+            }, {
+                name: '唯品会',
+                value: '6123'
+            }, {
+                name: '1号店',
+                value: '8989'
+            }, {
+                name: '聚美优品',
+                value: '6700'
+            },
+
+        ]
+
+
+        var option = {
+            series: [{
+                    type: 'pie',
+                    data: pieData,
+                    label: { //饼图文字显示
+                        show: true, //显示文字 默认配置
+                        // formatter: 'hehe' //决定文字显示内容
+                        formatter: function(arg) {
+                            return arg.name + '平台：' + arg.value + '元\n' + '     占比' + arg.percent + '%'
+                        }
+                    },
+                    // radius: 200 //饼图半径设置
+                    // radius: '20%' //百分比参照的是宽度和高度中较小的那一部分的一半来进行百分比设置
+                    // radius: ['50%', '75%'] //第0个元素代表的是内圆的半径  第1个元素表示的是外圆的半径
+                    roseType: 'radius', //南丁格尔图
+                    selectedMode: 'multiple', // 'single'  'multiple'
+                    selectedOffset: 30
+
+                }
+
+            ]
+
+        }
+        mCharts.setOption(option)
+    </script>
+</body>
+
+</html>
