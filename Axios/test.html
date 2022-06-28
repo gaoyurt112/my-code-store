@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="container"></div>
+    <button id="btn">点击获取</button>
+    <button id="btn1">点击取消</button>
+    <script>
+      //第一种方式
+      //   let btn = document.querySelector("#btn");
+      //   let show = document.querySelector("#container");
+
+      //   btn.addEventListener("click", async () => {
+      //     let p = await axios({
+      //       method: "GET",
+      //       url: "https://api.apiopen.top/api/sentences",
+      //     });
+      //     //   console.log(p.data.result.name);
+      //     console.log(p);
+      //     let duanzis = [];
+      //     let duanzi = p.data.result.name;
+      //     // console.log(duanzi);
+      //     let newduanzi = document.createElement('div')
+      //     newduanzi.innerText = duanzi
+      //     show.appendChild(newduanzi)
+      //   });
+
+      //第二种方式
+      //   let btn = document.querySelector("#btn");
+      //   let show = document.querySelector("#container");
+
+      //   btn.addEventListener("click", async () => {
+      //     let p = await axios.get('https://api.apiopen.top/api/sentences');
+      //     //   console.log(p.data.result.name);
+      //     let duanzis = [];
+      //     let duanzi = p.data.result.name;
+      //     // console.log(duanzi);
+      //     let newduanzi = document.createElement('div')
+      //     newduanzi.innerText = duanzi
+      //     show.appendChild(newduanzi)
+      //   });
+
+      let btn = document.querySelector("#btn");
+      let show = document.querySelector("#container");
+      let cancelbutton = document.querySelector("#btn1");
+      let p = {};
+      let cancel = null;
+      btn.addEventListener("click", async () => {
+         if (cancel !== null) {
+          cancel();
+        }
+        await axios({
+          method: "GET",
+          url: "https://api.apiopen.top/api/sentences",
+          cancelToken: new axios.CancelToken(function (c){
+            cancel = c;
+          }),
+        }).then((response) => {
+        //   console.log(response);
+          p = response;
+          cancel = null;
+        });
+        console.log(p);
+        let duanzis = [];
+        let duanzi = p.data.result.name;
+        // console.log(duanzi);
+        let newduanzi = document.createElement("div");
+        newduanzi.innerText = duanzi;
+        show.appendChild(newduanzi);
+      });
+
+      cancelbutton.onclick = function () {
+        cancel();
+      };
+    </script>
+  </body>
+</html>

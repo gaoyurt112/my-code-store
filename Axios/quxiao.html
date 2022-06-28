@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>axios取消请求</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+
+  <body>
+    <div id="container"></div>
+    <button class="btn btn-primary">发送请求</button>
+    <button class="btn btn-warning">取消请求</button>
+    <script>
+      const btns = document.querySelectorAll("button");
+      const show = document.querySelector("#container");
+      //创建全局变量
+      let cancel = null;
+      let p = [];
+      btns[0].onclick = async function () {
+        //判断上一次的请求是否完成，如果未完成就取消请求
+        if (cancel !== null) {
+          cancel(); 
+        }
+        await axios({
+          method: "GET",
+          url: "https://api.apiopen.top/api/sentences",
+          //axios取消请求
+          cancelToken: new axios.CancelToken(function (c) {
+            cancel = c;
+          }),
+        }).then((response) => {
+          p = response;
+          cancel = null;
+        });
+        console.log(p);
+        let duanzis = [];
+        let duanzi = p.data.result.name;
+        let newduanzi = document.createElement("div");
+        newduanzi.innerText = duanzi;
+        show.appendChild(newduanzi);
+      };
+      btns[1].onclick = function () {
+        cancel();
+      };
+    </script>
+  </body>
+</html>
