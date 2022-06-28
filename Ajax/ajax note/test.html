@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="container"></div>
+    <button id="btn">点击获取名言</button>
+    <button id="btn2">点击取消</button>
+    <script>
+      const btn = document.querySelector("#btn");
+      const btn2 = document.querySelector("#btn2");
+      const show = document.querySelector("#container");
+      let xhr = null
+      let isSending = false
+      btn.addEventListener('click',() => {
+        if(isSending){
+            xhr.abort()
+        }
+        xhr = new XMLHttpRequest();
+        //创建了一个新的请求
+        isSending = true
+        //设置请求超时
+        xhr.timeout = 2000
+        xhr.ontimeout = () => {
+            alert('网络异常')
+        }
+        xhr.onerror = () => {
+            alert('网络出问题')
+        }
+        //带参数的get请求可以直接写在url后面
+        xhr.open('GET', 'https://api.apiopen.top/api/sentences')
+        xhr.send()
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState === 4) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              let p = JSON.parse(xhr.response)
+              let a = document.createElement('div')
+              a.innerHTML = p.result.name
+              show.appendChild(a)
+            }
+          }
+        }
+      })
+
+     btn2.onclick = () =>{
+        xhr.abort()
+     }
+    </script>
+  </body>
+</html>
